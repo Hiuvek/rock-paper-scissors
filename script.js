@@ -1,14 +1,16 @@
 function getUserInput() {
-  const userInput = prompt("Please enter your input:");
+  const userInput = prompt("Elige piedra, papel o tijera:");
   return userInput;
 }
-// Normalizar texto a minúsculas
+
 function processInput(userInput) {
   const normalizedInput = userInput.toLowerCase();
   return normalizedInput;
 }
+
 function randomChoice() {
-  const randomInt = Math.floor(Math.random() * (4 - 1)) + 1;
+  const randomInt = Math.floor(Math.random() * 3) + 1;
+
   switch (randomInt) {
     case 1:
       return "piedra";
@@ -18,56 +20,69 @@ function randomChoice() {
       return "tijera";
   }
 }
-// Código principal
+
 function playGame() {
-  for (let i = 0; i < 3; i++) {
-    let userInput = getUserInput();
-    let processedInput = processInput(userInput);
-    console.log("Elegiste:", processedInput);
-    console.log("Pc Elige:", randomChoice());
-    contHumano = 0;
-    contPc = 0;
-    //Papel
-    if (processedInput === "papel" && randomChoice() === "tijera") {
-      console.log("Perdiste!");
+  let contHumano = 0;
+  let contPc = 0;
+
+  function playRound(humanChoice, computerChoice) {
+    console.log("Elegiste:", humanChoice);
+    console.log("PC eligió:", computerChoice);
+
+    // Papel
+    if (humanChoice === "papel" && computerChoice === "tijera") {
+      console.log("¡Perdiste! Tijera vence a papel.");
       contPc++;
-    } else if (processedInput === "papel" && randomChoice() === "piedra") {
-      console.log("Ganaste!");
+    } else if (humanChoice === "papel" && computerChoice === "piedra") {
+      console.log("¡Ganaste! Papel vence a piedra.");
       contHumano++;
-    } else if (processedInput === "papel" && randomChoice() === "papel") {
-      console.log("Empate!");
+    } else if (humanChoice === "papel" && computerChoice === "papel") {
+      console.log("¡Empate!");
     }
-    //Piedra
-    if (processedInput === "piedra" && randomChoice() === "papel") {
-      console.log("Perdiste!");
+
+    // Piedra
+    if (humanChoice === "piedra" && computerChoice === "papel") {
+      console.log("¡Perdiste! Papel vence a piedra.");
       contPc++;
-    } else if (processedInput === "piedra" && randomChoice() === "tijera") {
-      console.log("Ganaste!");
+    } else if (humanChoice === "piedra" && computerChoice === "tijera") {
+      console.log("¡Ganaste! Piedra vence a tijera.");
       contHumano++;
-    } else if (processedInput === "piedra" && randomChoice() === "piedra") {
-      console.log("Empate!");
+    } else if (humanChoice === "piedra" && computerChoice === "piedra") {
+      console.log("¡Empate!");
     }
-    //Tijera
-    if (processedInput === "tijera" && randomChoice() === "papel") {
-      console.log("Ganaste!");
+
+    // Tijera
+    if (humanChoice === "tijera" && computerChoice === "papel") {
+      console.log("¡Ganaste! Tijera vence a papel.");
       contHumano++;
-    } else if (processedInput === "tijera" && randomChoice() === "piedra") {
-      console.log("Perdiste!");
+    } else if (humanChoice === "tijera" && computerChoice === "piedra") {
+      console.log("¡Perdiste! Piedra vence a tijera.");
       contPc++;
-    } else if (processedInput === "tijera" && randomChoice() === "tijera") {
-      console.log("Empate!");
+    } else if (humanChoice === "tijera" && computerChoice === "tijera") {
+      console.log("¡Empate!");
     }
+
+    console.log("-----------------------------");
   }
-  //Evaluar resultados
+
+  for (let i = 0; i < 5; i++) {
+    const userInput = getUserInput();
+    const humanChoice = processInput(userInput);
+    const computerChoice = randomChoice();
+
+    console.log(`Ronda ${i + 1}`);
+    playRound(humanChoice, computerChoice);
+  }
+
   if (contHumano > contPc) {
-    console.log("Ganaste el juego!");
-    console.log("Puntaje final - Humano:", contHumano, "PC:", contPc);
+    console.log("¡Ganaste el juego!");
   } else if (contHumano < contPc) {
-    console.log("Perdiste el juego!");
-    console.log("Puntaje final - Humano:", contHumano, "PC:", contPc);
+    console.log("¡Perdiste el juego!");
   } else {
-    console.log("El juego terminó en empate!");
-    console.log("Puntaje final - Humano:", contHumano, "PC:", contPc);
+    console.log("¡El juego terminó en empate!");
   }
+
+  console.log("Puntaje final - Humano:", contHumano, "PC:", contPc);
 }
+
 playGame();
